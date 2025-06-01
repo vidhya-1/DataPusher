@@ -1,0 +1,21 @@
+
+# Node.js dependencies
+node_modules/           
+# Build output
+dist/
+# Logs
+logs/
+# Environment variables         
+.env
+# IDE specific files
+.vscode/
+# Operating system files        
+.DS_Store
+# Dependency directories    
+bower_components/
+# Coverage reports
+coverage/
+
+# Ignore all test files
+test/
+tests/

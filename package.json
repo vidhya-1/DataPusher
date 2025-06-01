@@ -1,0 +1,23 @@
+{
+  "name": "datapusher",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Selva",
+  "license": "ISC",
+  "description": "To create an Express web application to receive data into the app server for an account and send it across different platforms (destinations) from that particular account using webhook URLs. The app will also store the data in a SQLite database.",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7",
+    "uuid": "^11.1.0"
+  }
+}
