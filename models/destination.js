@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 const destinationSchema = (sequelize) => {
   return sequelize.define(
-    "Destination",
+    "destination",
     {
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       account_id: {

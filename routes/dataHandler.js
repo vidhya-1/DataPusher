@@ -2,10 +2,18 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 const { account, destination } = require("../models/index");
+const { validationResultMiddleware } = require("../utils/helper");
+const { forwardQueue } = require("../queue/forwardQueue");
+const rateLimit = require("express-rate-limit");
 
-// Middleware to parse JSON bodies
+const limiter = rateLimit({
+  windowMs: 1000, // 1 sec
+  max: 5, // limit each IP to 5 requests/sec
+  keyGenerator: (req) => req.headers["cl-x-token"],
+  message: { success: false, message: "Too many requests" },
+});
 
-router.post("/incoming_data", async (req, res) => {
+router.post("/incoming_data", limiter, async (req, res) => {
   const token = req.headers["cl-x-token"];
   if (!token) return res.status(401).json({ error: "Un Authenticate" });
 
@@ -24,30 +32,19 @@ router.post("/incoming_data", async (req, res) => {
         .status(404)
         .json({ error: "No destinations found for this account" });
     }
-    const payload = req.body;
+
     for (const dest of destinations) {
-      const headers = dest.headers;
-
-      if (dest.http_method.toUpperCase() === "GET") {
-        if (typeof payload !== "object") {
-          return res.status(400).json({ error: "Invalid Data" });
-        }
-
-        await axios.get(dest.url, {
-          params: payload,
-          headers,
-        });
-      } else {
-        await axios({
-          method: dest.http_method,
-          url: dest.url,
-          data: payload,
-          headers,
-        });
-      }
+      await forwardQueue.empty(); // Clears all waiting jobs
+      await forwardQueue.add({
+        destination: dest,
+        payload: {
+          headers: req.headers,
+          body: req.body,
+        },
+        accountValue: accountDetails,
+      });
     }
-
-    res.json({ message: "Data forwarded to all destinations" });
+    res.json({ success: true, message: "Data queued for processing" });
   } catch (err) {
     res.status(500).json({ error: "Internal Error" });
   }

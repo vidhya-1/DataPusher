@@ -1,3 +1,4 @@
+
 {
 	"info": {
 		"_postman_id": "326d86f2-5a01-4e06-9989-8b32d7c08ef4",
@@ -13,10 +14,16 @@
 					"name": "Create Account",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"QA@example.com\",\r\n    \"account_id\": 2,\r\n    \"account_name\": \"Sample test343\"\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"selva1@gmail.com\",\r\n    \"account_id\": 28,\r\n    \"account_name\": \"Furious\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -41,7 +48,13 @@
 					"name": "Get Account",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "user",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:4000/account",
 							"protocol": "http",
@@ -57,29 +70,31 @@
 					"response": []
 				},
 				{
-					"name": "Update Account",
+					"name": "email based filter",
 					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"account_name\":\"Updating the content\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
 							}
-						},
+						],
 						"url": {
-							"raw": "http://localhost:4000/account/1",
+							"raw": "http://localhost:4000/account?email=selvadfsdf@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "4000",
 							"path": [
-								"account",
-								"1"
+								"account"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "selvadfsdf@gmail.com"
+								}
 							]
 						}
 					},
@@ -89,9 +104,15 @@
 					"name": "Delete Account",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:4000/account/1",
+							"raw": "http://localhost:4000/account/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -99,7 +120,42 @@
 							"port": "4000",
 							"path": [
 								"account",
-								"1"
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"account_name\": \"Fast\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/account/26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"account",
+								"26"
 							]
 						}
 					},
@@ -114,10 +170,16 @@
 					"name": "Create Destination",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"account_id\":13 ,\r\n    \"url\": \"https://webhook.site/b963e764-592c-43d8-95a1-41e15650381d\",\r\n    \"http_method\": \"GET\",\r\n    \"headers\": {\r\n      \"APP_ID\": \"NEMO23\",\r\n      \"APP_SECRET\": \"97a1577b-a7de-4036-8978-44c8a6df16dc\",\r\n      \"Content-Type\": \"application/json\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"account_id\":2 ,\r\n    \"url\": \"https://webhook.site/b963e764-592c-43d8-95a1-41e15650381d\",\r\n    \"http_method\": \"GET\",\r\n    \"headers\": {\r\n      \"APP_ID\": \"NEMO23\",\r\n      \"APP_SECRET\": \"97a1577b-a7de-4036-8978-44c8a6df16dc\",\r\n      \"Content-Type\": \"application/json\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -145,7 +207,13 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -164,6 +232,49 @@
 							"port": "4000",
 							"path": [
 								"destination"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/destination?http_method=POST",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"destination"
+							],
+							"query": [
+								{
+									"key": "http_method",
+									"value": "POST"
+								}
 							]
 						}
 					},
@@ -202,7 +313,13 @@
 					"name": "Delete Destination",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:4000/destination/29",
 							"protocol": "http",
@@ -213,6 +330,249 @@
 							"path": [
 								"destination",
 								"29"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "create new user / SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"develodsl@gmail.com\",\r\n    \"passwordValue\":\"3fr\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login user / SignIn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"developer123com\",\r\n    \"passwordValue\":\"dfdsd\"   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AccountMember",
+			"item": [
+				{
+					"name": "create Account Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 2,\r\n    \"account_id\":12,\r\n    \"role_id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/accountMember",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"accountMember"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AccountMembers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/accountMember?x-user-role=admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"accountMember"
+							],
+							"query": [
+								{
+									"key": "x-user-role",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get AccountMembers Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/accountMember/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"accountMember",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account Member",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-user-role",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"account_id\":13\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/accountMember/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"accountMember",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "Get logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter logs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/logs?status_code=OK",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"logs"
+							],
+							"query": [
+								{
+									"key": "status_code",
+									"value": "OK"
+								}
 							]
 						}
 					},
@@ -232,13 +592,18 @@
 					},
 					{
 						"key": "CL-X-TOKEN",
-						"value": "97a1577b-a7de-4036-8978-44c8a6df16dc",
+						"value": "58d041d4-d36e-4ace-a2e4-454c9bc6cd77",
+						"type": "text"
+					},
+					{
+						"key": "CL-X-EVENT-ID",
+						"value": "event-1",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"event\":\"userSignup\",\r\n    \"user\": {\r\n      \"id\": 126,\r\n      \"email\": \"Check@example.com\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"event\":\"userSignup\",\r\n    \"user\": {\r\n      \"id\": 16,\r\n      \"email\": \"Check3dfd3@example.com\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

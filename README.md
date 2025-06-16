@@ -1,51 +1,96 @@
 # Data Pusher App
 
-A simple Express.js app to receive JSON data and forward it to third-party platforms (destinations) using webhooks. Each destination is associated with an account, and data is forwarded based on a secret token.
+A Node.js and Express.js application designed to receive JSON data and forward it to third-party platforms (destinations) via webhooks. Each destination is linked to an account, and data forwarding is secured using secret tokens.
 
-##  Tech Stack
+## Tech Stack
 
 - Node.js
 - Express.js
 - Sequelize ORM
 - SQLite
 - Axios (for forwarding data to destinations)
+- Redis (for caching)
 
----
+## Project Structure
 
-##  Project Structure
-
+```
 ├── models/
-│ ├── index.js # Sequelize config & model setup
-│ ├── account.js # Account schema
-│ └── destination.js # Destination schema
+│   ├── index.js           # Sequelize configuration and model setup
+│   ├── account.js         # Account model schema
+│   ├── destination.js     # Destination model schema
+│   ├── accountMember.js   # Account member model schema
+│   └── other models...
 ├── routes/
-│ ├── accountRoutes.js # CRUD for accounts
-│ ├── destinationRoutes.js # CRUD for destinations
-│ └── dataHandler.js # Handles incoming data & forwards to destinations
-├── server.js # App entry point
-├── data.db # SQLite DB file
+│   ├── accountRoutes.js       # CRUD operations for accounts
+│   ├── destinationRoutes.js   # CRUD operations for destinations
+│   ├── accountMember.js       # CRUD for account members
+│   ├── dataHandler.js         # Handles incoming data and forwards to destinations
+│   ├── logRoutes.js           # Logs retrieval routes
+│   └── other route files...
+├── queue/
+│   └── forwardQueue.js        # Bull queue setup for forwarding jobs
+├── test/
+│   └── various test files     # Jest/Supertest test suites
+├── utils/
+│   └── helper.js              # Helper functions and middleware
+├── server.js                  # Application entry point
+├── data.db                   # SQLite database file
+├── package.json              # Project dependencies and scripts
+└── README.md                 # Project documentation
+```
 
+## Features
 
----
-
-##  Features
-
-- Create, update, delete accounts and destinations.
-- Automatically generate secret tokens for accounts.
-- Receive JSON data at `/server/incoming_data` and forward to linked destinations.
-- Forwards data using `POST`, `PUT`, or `GET` based on destination method.
-- Includes custom headers per destination.
-- Secure access via `CL-X-TOKEN` header.
-
----
+- Manage accounts and destinations with full CRUD operations.
+- Secure data forwarding using secret tokens (`CL-X-TOKEN` header).
+- Receive JSON data at `/server/incoming_data` endpoint and forward it to linked destinations.
+- Supports forwarding data via HTTP methods: POST, PUT, GET.
+- Custom headers support per destination.
+- Role-based access control for API endpoints.
+- Caching with Redis for improved performance.
+- Background job processing with Bull queue.
 
 ## Getting Started
 
-### 1. Install Dependencies
+### Prerequisites
+
+- Node.js (v14 or higher recommended)
+- Redis server running locally or accessible remotely
+
+### Installation
 
 ```bash
 npm install
- 
-### Start the server
+```
 
+### Running the Server
+
+```bash
 node server.js
+```
+
+The server will start on port 3000 by default or the port specified in your `.env` file.
+
+## Testing
+
+- Tests are written using Jest and Supertest.
+- Run tests with:
+
+```bash
+npm test
+```
+
+## API Endpoints Overview
+
+- `/account` - Manage accounts
+- `/destination` - Manage destinations
+- `/accountMember` - Manage account members
+- `/logs` - Retrieve logs
+- `/server/incoming_data` - Endpoint to receive and forward incoming JSON data
+
+## Notes
+
+- Ensure Redis is running for caching and queue processing.
+- Secret tokens are automatically generated for accounts.
+- Use appropriate headers and roles when accessing protected endpoints.
+
