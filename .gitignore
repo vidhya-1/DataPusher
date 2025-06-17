@@ -17,5 +17,5 @@ bower_components/
 coverage/
 
 # Ignore all test files
-test/
-tests/
+# test/
+# tests/
