@@ -22,7 +22,7 @@ const accountSchema = (sequelize) => {
       indexes: [
         {
           name: "email_index",
-          unique: false, // Index on email for faster lookups
+          unique: true, // Index on email for faster lookups
           using: "BTREE", // Using B-tree index for efficient searching
           fields: ["email"],
         },
